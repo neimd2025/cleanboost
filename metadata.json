@@ -1,0 +1,7 @@
+{
+  "name": "CleanBoost AI Marketing System",
+  "description": "An AI-powered marketing suite for cleaning businesses that transforms raw field data into professional social media content and SEO-optimized blog posts.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
