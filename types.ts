@@ -1,4 +1,62 @@
+export type PhotoStatus = 'before' | 'after' | 'process';
+export type LegacyPhotoStatus = '전' | '후' | '과정';
 
+export type SpaceType = '주방' | '화장실' | '거실' | '방' | '베란다' | '현관' | '방/거실' | '기타';
+
+export interface SiteInfo {
+  location: string;
+  buildingName: string;
+  serviceType: string;
+  notes: string;
+}
+
+export interface PhotoItem {
+  id: string;
+  name: string;
+  dataUrl: string;
+  status: PhotoStatus;
+  space?: SpaceType;
+  confidence?: number;
+}
+
+export interface SpacePhotoGroup {
+  space: SpaceType;
+  imageIndices: number[];
+  beforeAfterPairs: [number, number][];
+  processIndices: number[];
+}
+
+export interface PhotoClassification {
+  index: number;
+  space: SpaceType;
+  confidence: number;
+}
+
+export interface AnalysisResult {
+  photos: PhotoClassification[];
+  groups: SpacePhotoGroup[];
+}
+
+export interface BlogSection {
+  subtitle: string;
+  imageIndices: number[];
+  body: string;
+  sectionType: 'diagnosis' | 'process' | 'result';
+}
+
+export interface BlogContent {
+  title: string;
+  intro: string;
+  sections: BlogSection[];
+  outro: string;
+  tags: string[];
+}
+
+export interface BlogResult {
+  blog: BlogContent;
+}
+
+// Legacy types kept for compatibility with existing files.
 export interface BossProfile {
   companyName: string;
   experience: string;
@@ -9,7 +67,7 @@ export interface BossProfile {
 export interface PhotoEntry {
   id: string;
   url: string;
-  status: '전' | '후' | '과정';
+  status: LegacyPhotoStatus;
 }
 
 export interface CleaningData {
@@ -20,19 +78,6 @@ export interface CleaningData {
   photos: PhotoEntry[];
 }
 
-export interface BlogSection {
-  subtitle: string;
-  imageIndices: number[]; // AI가 선택한 사진들의 인덱스 (1개면 단독, 2개면 B/A 매칭)
-  body: string;
-  sectionType: 'diagnosis' | 'process' | 'result'; // 백서 단계 구분
-}
-
 export interface GeneratedContent {
-  blog: {
-    title: string;
-    intro: string;
-    sections: BlogSection[];
-    outro: string;
-    tags: string[];
-  };
+  blog: BlogContent;
 }
